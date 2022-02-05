@@ -35,6 +35,7 @@ defmodule Excon.GitApi.Client do
           | acc
         ]
       end)
+      |> Enum.reverse()
 
     {:ok, new_map}
   end
