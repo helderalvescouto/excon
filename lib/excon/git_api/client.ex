@@ -3,9 +3,9 @@ defmodule Excon.GitApi.Client do
 
   alias Tesla.Env
 
-  def build(login) do
+  def build(url, login) do
     middleware = [
-      {Tesla.Middleware.BaseUrl, "https://api.github.com"},
+      {Tesla.Middleware.BaseUrl, "https://#{url}"},
       Tesla.Middleware.JSON
     ]
 
@@ -41,6 +41,8 @@ defmodule Excon.GitApi.Client do
   end
 
   defp handle_get({:ok, %Env{status: _400, body: body}}, _login), do: {:error, body}
+
+  defp handle_get({:error, reason}, _login), do: {:error, reason}
 
   defp handle_name(full_name, login) do
     tam = String.length(login) + 1
