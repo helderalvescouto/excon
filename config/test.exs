@@ -12,6 +12,8 @@ config :excon, Excon.Repo,
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
 
+config :excon, Excon.GitApi.Client, get_api_adapter: Excon.GitApi.ClientMock
+
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
 config :excon, ExconWeb.Endpoint,

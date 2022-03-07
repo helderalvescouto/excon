@@ -6,7 +6,7 @@ defmodule Excon.GitApi.ClientTest do
   alias Plug.Conn
   alias Excon.GitApi.Client
 
-  describe "build/2" do
+  describe "user_repos/1" do
     setup do
       bypass = Bypass.open()
 
@@ -18,22 +18,28 @@ defmodule Excon.GitApi.ClientTest do
 
       url = endpoint_url(bypass.port)
 
-      body = {:ok, [build(:repos_git)]}
+      body = %{
+        "description" =>
+          "Material necessário para realização do processamento de áudios para a disciplina Tópicos Especiais em Inteligência Artificial - UFPI",
+        "html_url" => "https://github.com/danilo-vieira/audio_processing",
+        "id" => 247_000_001,
+        "name" => "audio_processing",
+        "stargazers_count" => 0
+      }
 
       Bypass.expect(bypass, "GET", "/users/#{username}/repos", fn conn ->
         conn
-        |> IO.inspect(label: "CONEXAO")
         |> Conn.put_resp_header("content-type", "application/json")
         |> Conn.resp(200, body)
       end)
 
-      response = Client.build(url, username)
+      response = Client.user_repos(url, username)
 
-      expected_response = {:ok, [build(:repos_git)]}
+      expected_response = build(:repos_git)
 
       assert response == expected_response
     end
 
-    defp endpoint_url(port), do: "http://localhost:#{port}/"
+    defp endpoint_url(port), do: "http://localhost:#{port}"
   end
 end
