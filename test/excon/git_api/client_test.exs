@@ -18,11 +18,12 @@ defmodule Excon.GitApi.ClientTest do
 
       url = endpoint_url(bypass.port)
 
-      body = ~S({ "cep": "01001-000" })
+      body = {:ok, [build(:repos_git)]}
 
       Bypass.expect(bypass, "GET", "/users/#{username}/repos", fn conn ->
         conn
-        |> Conn.put_resp_header("content-type", "text/plain")
+        |> IO.inspect(label: "CONEXAO")
+        |> Conn.put_resp_header("content-type", "application/json")
         |> Conn.resp(200, body)
       end)
 
