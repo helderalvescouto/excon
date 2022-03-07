@@ -3,20 +3,13 @@ defmodule Excon.GitApi.Client do
 
   alias Tesla.Env
 
-  def build(url, login) do
-    middleware = [
-      {Tesla.Middleware.BaseUrl, "https://#{url}"},
-      Tesla.Middleware.JSON
-    ]
+  @base_url "https://api.github.com"
+  plug Tesla.Middleware.JSON
 
-    middleware
-    |> Tesla.client()
-    |> user_repos(login)
-  end
-
-  defp user_repos(client, login) do
-    client
-    |> Tesla.get("/users/" <> login <> "/repos")
+  def user_repos(url \\ @base_url, login) do
+    "#{url}/users/#{login}/repos"
+    |> get()
+    |> IO.inspect()
     |> handle_get(login)
   end
 

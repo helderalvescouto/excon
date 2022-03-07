@@ -10,6 +10,8 @@ use Mix.Config
 config :excon,
   ecto_repos: [Excon.Repo]
 
+config :excon, Excon.GitApi.Client, get_api_adapter: Excon.GitApi.Client
+
 config :tesla, adapter: Tesla.Adapter.Hackney
 
 # Configures the endpoint

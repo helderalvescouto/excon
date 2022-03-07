@@ -39,6 +39,7 @@ defmodule Excon.MixProject do
       {:ecto_sql, "~> 3.4"},
       {:ex_machina, "~> 2.7.0"},
       {:hackney, "~> 1.17"},
+      {:mox, "~> 1.0", only: :test},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_live_dashboard, "~> 0.4"},
       {:telemetry_metrics, "~> 0.4"},
